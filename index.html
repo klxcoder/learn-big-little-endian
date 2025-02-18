@@ -32,6 +32,11 @@
       return sum;
     }
 
+    const hexToLittleEndianDecimal = (hex) => {
+      const littleEndianHex = hex.match(/.{2}/g).reverse().join('');
+      return hexToBigEndianDecimal(littleEndianHex);
+    }
+
     const getRow = (byte) => {
       const width = 8 * byte;
       const hex = generateRandomHex(2 * byte);
@@ -54,6 +59,7 @@
       ))}
     </div>;
 
+    console.log(hexToLittleEndianDecimal('3500')); // 53
     console.log(hexToBigEndianDecimal('1014')); // 4116
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
