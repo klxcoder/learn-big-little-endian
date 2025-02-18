@@ -13,6 +13,7 @@
       width: 100%;
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
     }
@@ -76,8 +77,10 @@
       return sum;
     }
 
+    const hexToLittleEndianHex = (hex) => hex.match(/.{2}/g).reverse().join('');
+
     const hexToLittleEndianDecimal = (hex) => {
-      const littleEndianHex = hex.match(/.{2}/g).reverse().join('');
+      const littleEndianHex = hexToLittleEndianHex(hex);
       return hexToBigEndianDecimal(littleEndianHex);
     }
 
@@ -101,6 +104,15 @@
       getRow(4),
     ]
 
+    const Details = ({ hex }) => (
+      <div>
+        <h1>Explain </h1>
+        <div>Hex = 0x{hex}</div>
+        <div dangerouslySetInnerHTML={{ __html: `Big endian = ${hex.split('').map((char, index) => char + ' * 16<sup>' + (hex.length - index - 1) + '</sup>').join(' + ')} = ${hexToBigEndianDecimal(hex)}` }}></div>
+        <div dangerouslySetInnerHTML={{ __html: `Little endian = ${hexToLittleEndianHex(hex).split('').map((char, index) => char + ' * 16<sup>' + (hex.length - index - 1) + '</sup>').join(' + ')} = ${hexToLittleEndianDecimal(hex)}` }}></div>
+      </div>
+    );
+
     const App = () => <div className="app">
       <table>
         <caption>Big endian and little endian example</caption>
@@ -123,6 +135,7 @@
           ))}
         </tbody>
       </table>
+      <Details hex={rows[0].hex} />
     </div>;
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
