@@ -22,6 +22,16 @@
       border-collapse: collapse;
     }
 
+    caption {
+      font-size: 1.5em;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+      text-align: center;
+      background-color: #f8f8f8;
+      padding: 10px;
+    }
+
     th,
     td {
       padding: 10px;
@@ -93,6 +103,7 @@
 
     const App = () => <div className="app">
       <table>
+        <caption>Big endian and little endian example</caption>
         <thead>
           <tr>
             <th>Width</th>
