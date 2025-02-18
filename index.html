@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>React with JSX</title>
+  <title>Learn big endian and little endian</title>
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -42,9 +42,9 @@
       const hex = generateRandomHex(2 * byte);
       return {
         width: width,
-        bigEndian: 0,
-        littleEndian: 0,
         hex: hex,
+        bigEndian: hexToBigEndianDecimal(hex),
+        littleEndian: hexToLittleEndianDecimal(hex),
       }
     }
 
@@ -54,13 +54,27 @@
     ]
 
     const App = () => <div>
-      {rows.map((row, index) => (
-        <div key={index}>{row.width} - 0x{row.hex} - {row.bigEndian} - {row.littleEndian}</div>
-      ))}
+      <table>
+        <thead>
+          <tr>
+            <th>Width</th>
+            <th>Hex</th>
+            <th>Big Endian</th>
+            <th>Little Endian</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row, index) => (
+            <tr key={index}>
+              <td>{row.width}</td>
+              <td>0x{row.hex}</td>
+              <td>{row.bigEndian}</td>
+              <td>{row.littleEndian}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>;
-
-    console.log(hexToLittleEndianDecimal('3500')); // 53
-    console.log(hexToBigEndianDecimal('1014')); // 4116
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
