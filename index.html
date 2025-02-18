@@ -13,7 +13,35 @@
 <body>
   <div id="root"></div>
   <script type="text/babel">
-    const App = () => <h1>Hello, React with JSX!</h1>;
+    function generateRandomHex(length) {
+      let hex = '';
+      const characters = '0123456789ABCDEF';
+      for (let i = 0; i < length; i++) {
+        hex += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return hex;
+    }
+
+    const getRow = (byte) => {
+      const width = 8 * byte;
+      const hex = generateRandomHex(2 * byte);
+      return {
+        width: width,
+        bigEndian: 0,
+        littleEndian: 0,
+        hex: hex,
+      }
+    }
+
+    const rows = [
+      getRow(2),
+      getRow(4),
+    ]
+    const App = () => <div>
+      {rows.map((row, index) => (
+        <div key={index}>{row.width} - 0x{row.hex} - {row.bigEndian} - {row.littleEndian}</div>
+      ))}
+    </div>;
     ReactDOM.render(<App />, document.getElementById('root'));
   </script>
 </body>
