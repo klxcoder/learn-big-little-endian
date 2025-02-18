@@ -52,6 +52,10 @@
     tr:hover {
       background-color: #ddd;
     }
+
+    .active {
+      background-color: aqua;
+    }
   </style>
 </head>
 
@@ -113,30 +117,37 @@
       </div>
     );
 
-    const App = () => <div className="app">
-      <table>
-        <caption>Big endian and little endian example</caption>
-        <thead>
-          <tr>
-            <th>Width</th>
-            <th>Hex</th>
-            <th>Big Endian</th>
-            <th>Little Endian</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map((row, index) => (
-            <tr key={index}>
-              <td>{row.width}</td>
-              <td>0x{row.hex}</td>
-              <td>{row.bigEndian}</td>
-              <td>{row.littleEndian}</td>
+    const App = () => {
+      const [activeIndex, setActiveIndex] = React.useState(0);
+      return <div className="app">
+        <table>
+          <caption>Big endian and little endian example</caption>
+          <thead>
+            <tr>
+              <th>Width</th>
+              <th>Hex</th>
+              <th>Big Endian</th>
+              <th>Little Endian</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <Details hex={rows[0].hex} />
-    </div>;
+          </thead>
+          <tbody>
+            {rows.map((row, index) => (
+              <tr
+                className={index === activeIndex ? "active" : ""}
+                key={index}
+                onClick={() => setActiveIndex(index)}
+              >
+                <td>{row.width}</td>
+                <td>0x{row.hex}</td>
+                <td>{row.bigEndian}</td>
+                <td>{row.littleEndian}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <Details hex={rows[activeIndex].hex} />
+      </div>
+    };
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
