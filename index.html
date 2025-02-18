@@ -22,6 +22,16 @@
       return hex;
     }
 
+    const hexToBigEndianDecimal = (hex) => {
+      let sum = 0;
+      let base = 1;
+      for (let index = hex.length - 1; index >= 0; index--) {
+        sum += base * parseInt(hex[index], 16);
+        base *= 16;
+      }
+      return sum;
+    }
+
     const getRow = (byte) => {
       const width = 8 * byte;
       const hex = generateRandomHex(2 * byte);
@@ -37,11 +47,14 @@
       getRow(2),
       getRow(4),
     ]
+
     const App = () => <div>
       {rows.map((row, index) => (
         <div key={index}>{row.width} - 0x{row.hex} - {row.bigEndian} - {row.littleEndian}</div>
       ))}
     </div>;
+
+    console.log(hexToBigEndianDecimal('1014')); // 4116
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(<App />);
